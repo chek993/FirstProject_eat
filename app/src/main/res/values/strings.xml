@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">FirstProject_eat</string>
+    <string name="email_hint">insert email</string>
+    <string name="password_hint">insert password</string>
+    <string name="login">LOGIN</string>
+    <string name="register">REGISTER</string>
+    <string name="telephone_number_hint">insert telephone number</string>
 </resources>
