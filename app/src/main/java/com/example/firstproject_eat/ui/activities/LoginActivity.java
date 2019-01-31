@@ -1,4 +1,4 @@
-package com.example.firstproject_eat;
+package com.example.firstproject_eat.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.example.firstproject_eat.R;
+import com.example.firstproject_eat.Utilities;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 

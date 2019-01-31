@@ -1,4 +1,4 @@
-package com.example.firstproject_eat;
+package com.example.firstproject_eat.ui.activities;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,6 +8,9 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.example.firstproject_eat.R;
+import com.example.firstproject_eat.Utilities;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
