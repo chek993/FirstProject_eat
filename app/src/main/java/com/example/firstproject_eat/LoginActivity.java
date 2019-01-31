@@ -46,10 +46,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String password = passwordEt.getText().toString();
 
         if(!Utilities.isValidEmail(email)){
+            emailEt.setError("Invalid email");
             return;
         }
 
         if(!Utilities.isValidPassword(password)){
+            passwordEt.setError("Invalid password");
             return;
         }
 

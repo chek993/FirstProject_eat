@@ -38,6 +38,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 isEmailValid = Utilities.isValidEmail(s.toString());
+
+                if(!isEmailValid){
+                    insertEmailEt.setError("Invalid email");
+                }
             }
 
             @Override
@@ -55,6 +59,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 isPasswordValid = Utilities.isValidPassword(s.toString());
+
+                if(!isPasswordValid){
+                    insertPasswordEt.setError("Invalid password");
+                }
             }
 
             @Override
@@ -72,6 +80,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 isPhoneValid = Utilities.isValidPhone(s.toString());
+
+                if(!isPhoneValid){
+                    insertPasswordEt.setError("Invalid email");
+                }
             }
 
             @Override
