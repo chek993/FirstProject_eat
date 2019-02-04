@@ -85,7 +85,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 isPhoneValid = Utilities.isValidPhone(s.toString());
 
                 if(!isPhoneValid){
-                    insertPasswordEt.setError("Invalid email");
+                    insertPhoneEt.setError("Invalid telephone number");
                 }
             }
 
