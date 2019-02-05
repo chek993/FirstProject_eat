@@ -9,6 +9,11 @@
         />
 
     <item
+        android:id="@+id/view_mode"
+        android:icon="@drawable/ic_action_name"
+        app:showAsAction="always"/>
+
+    <item
         android:id="@+id/checkout_menu"
         android:title="@string/checkout"
         />

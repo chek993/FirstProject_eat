@@ -2,47 +2,45 @@ package com.example.firstproject_eat.datamodels;
 
 public class Restaurant {
 
-    private String nome;
-    private String indirizzo;
-    private float minOrdine;
-    private String anteprima;
+    private String name, address, image;
+    private float minOrder;
 
-    public Restaurant(String nome, String indirizzo, float minOrdine, String anteprima){
-        this.nome = nome;
-        this.indirizzo = indirizzo;
-        this.minOrdine = minOrdine;
-        this.anteprima = anteprima;
+    public Restaurant(String name, String address, float minOrder, String image){
+        this.name = name;
+        this.address = address;
+        this.minOrder = minOrder;
+        this.image = image;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getIndirizzo() {
-        return indirizzo;
+    public String getAddress() {
+        return address;
     }
 
-    public void setIndirizzo(String indirizzo) {
-        this.indirizzo = indirizzo;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public float getMinOrdine() {
-        return minOrdine;
+    public float getMinOrder() {
+        return minOrder;
     }
 
-    public void setMinOrdine(float minOrdine) {
-        this.minOrdine = minOrdine;
+    public void setMinOrder(float minOrder) {
+        this.minOrder = minOrder;
     }
 
-    public String getAnteprima() {
-        return anteprima;
+    public String getImage() {
+        return image;
     }
 
-    public void setAnteprima(String anteprima) {
-        this.anteprima = anteprima;
+    public void setImage(String image) {
+        this.image = image;
     }
 }

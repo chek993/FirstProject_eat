@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +17,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     EditText emailEt, passwordEt;
     Button loginBtn, registerBtn;
+    boolean isEmailValid;
 
     public static final String EMAIL_KEY = "email_login";
 
@@ -31,6 +34,27 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         loginBtn.setOnClickListener(this);
         registerBtn.setOnClickListener(this);
+
+        emailEt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                isEmailValid = Utilities.isValidEmail(s.toString());
+
+                if(!isEmailValid){
+                    emailEt.setError("Invalid email");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                enableLoginIfReady();
+            }
+        });
     }
 
     @Override
@@ -61,5 +85,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         /*Intent welcome = new Intent(this, WelcomeActivity.class);
         welcome.putExtra(EMAIL_KEY, email);
         startActivity(welcome);*/
+    }
+
+    private void enableLoginIfReady() {
+        loginBtn.setEnabled(isEmailValid);
     }
 }
