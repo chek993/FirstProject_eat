@@ -17,7 +17,8 @@
             android:paddingTop="100dp"
             android:hint="@string/email_hint"
             android:id="@+id/insert_email_et"
-            android:inputType="textEmailAddress"/>
+            android:inputType="textEmailAddress"
+            android:drawableRight="@drawable/ic_person"/>
 
         <EditText
             android:layout_width="match_parent"
@@ -25,7 +26,8 @@
             android:layout_marginTop="8dp"
             android:hint="@string/password_hint"
             android:id="@+id/insert_password_et"
-            android:inputType="textPassword"/>
+            android:inputType="textPassword"
+            android:drawableRight="@drawable/ic_lock"/>
 
         <EditText
             android:layout_width="match_parent"
@@ -33,7 +35,8 @@
             android:layout_marginTop="8dp"
             android:hint="@string/telephone_number_hint"
             android:id="@+id/telephone_number_et"
-            android:inputType="phone"/>
+            android:inputType="phone"
+            android:drawableRight="@drawable/ic_phone"/>
 
     </LinearLayout>
 

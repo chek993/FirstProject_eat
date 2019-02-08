@@ -1,15 +1,21 @@
 package com.example.firstproject_eat.datamodels;
 
+import java.util.ArrayList;
+
 public class Restaurant {
 
     private String name, address, image;
     private float minOrder;
+
+    private ArrayList<Product> products;
 
     public Restaurant(String name, String address, float minOrder, String image){
         this.name = name;
         this.address = address;
         this.minOrder = minOrder;
         this.image = image;
+
+        products = new ArrayList<>();
     }
 
     public String getName() {
@@ -42,5 +48,13 @@ public class Restaurant {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public ArrayList<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(ArrayList<Product> products) {
+        this.products = products;
     }
 }
