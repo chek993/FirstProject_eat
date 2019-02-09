@@ -17,6 +17,7 @@ import com.example.firstproject_eat.datamodels.Restaurant;
 import com.example.firstproject_eat.ui.activities.ShopActivity;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class RestaurantAdapter extends RecyclerView.Adapter {
 
@@ -61,7 +62,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter {
 
         vh.restaurantName.setText(item.getName());
         vh.restaurantAddress.setText(item.getAddress());
-        vh.restaurantMinOrder.append(context.getString(R.string.min_order).concat(String.valueOf(item.getMinOrder())));
+        vh.restaurantMinOrder.append(String.format(Locale.getDefault(), "%.2f", item.getMinOrder()));
 
         Glide.with(context).load(item.getImage()).into(vh.restaurantImage);
     }
@@ -84,7 +85,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter {
             restaurantImage = itemView.findViewById(R.id.restaurant_iv);
             restaurantName = itemView.findViewById(R.id.name_tv);
             restaurantAddress = itemView.findViewById(R.id.address_tv);
-            restaurantMinOrder = itemView.findViewById(R.id.min_order_tv);
+            restaurantMinOrder = itemView.findViewById(R.id.min_order_value_tv);
             //menuBtn = itemView.findViewById(R.id.menu_btn);
             restaurantCv = itemView.findViewById(R.id.restaurant_card_view);
 
