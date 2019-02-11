@@ -53,6 +53,21 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
         productsRv = findViewById(R.id.product_rv);
         checkoutBtn = findViewById(R.id.checkout_btn);
 
+        binData();
+
+        layoutManager = new LinearLayoutManager(this);
+        adapter = new ProductAdapter(this, restaurant.getProducts());
+
+        adapter.setOnQuantityChangedListener(this);
+
+        productsRv.setLayoutManager(layoutManager);
+        productsRv.setAdapter(adapter);
+
+        checkoutBtn.setOnClickListener(this);
+    }
+
+    //TODO hardcoded
+    private void binData(){
         restaurant = getRestaurant();
         restaurant.setProducts(getProducts());
 
@@ -65,16 +80,6 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
         Glide.with(this).load(restaurant.getImage()).into(restaurantIv);
 
         progressBar.setMax((int)(restaurant.getMinOrder() * 100));
-
-        layoutManager = new LinearLayoutManager(this);
-        adapter = new ProductAdapter(this, restaurant.getProducts());
-
-        adapter.setOnQuantityChangedListener(this);
-
-        productsRv.setLayoutManager(layoutManager);
-        productsRv.setAdapter(adapter);
-
-        checkoutBtn.setOnClickListener(this);
     }
 
     @Override

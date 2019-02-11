@@ -13,4 +13,6 @@
     <string name="plus">+</string>
     <string name="quantity_0">0</string>
     <string name="price_tv">Price</string>
+    <string name="order_summary">Order summary</string>
+    <string name="pay">PAY</string>
 </resources>
