@@ -19,7 +19,7 @@ import java.util.Locale;
 
 public class CheckoutActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private TextView restaurantNameTv, restaurantAddressTv, totalTv;
+    private TextView restaurantNameTv, restaurantAddressTv, totalTv, minOrderTv;
     private RecyclerView productRv;
     private Button payBtn;
     private LinearLayoutManager layoutManager;
@@ -34,8 +34,9 @@ public class CheckoutActivity extends AppCompatActivity implements View.OnClickL
 
         restaurantNameTv = findViewById(R.id.restaurant_name_tv);
         restaurantAddressTv = findViewById(R.id.restaurant_address_tv);
-        totalTv = findViewById(R.id.total_tv);
         productRv = findViewById(R.id.product_rv);
+        totalTv = findViewById(R.id.total_value_tv);
+        minOrderTv = findViewById(R.id.min_order_value_tv);
         payBtn = findViewById(R.id.pay_btn);
 
         order = getOrder();
@@ -53,6 +54,7 @@ public class CheckoutActivity extends AppCompatActivity implements View.OnClickL
         restaurantNameTv.setText(order.getRestaurant().getName());
         restaurantAddressTv.setText(order.getRestaurant().getAddress());
         totalTv.setText(String.format(Locale.getDefault(), "%.2f", order.getTotal()));
+        minOrderTv.setText(String.format(Locale.getDefault(), "%.2f", order.getRestaurant().getMinOrder()));
     }
 
     //TODO hardcoded
@@ -61,7 +63,7 @@ public class CheckoutActivity extends AppCompatActivity implements View.OnClickL
 
         mockOrder.setProducts(getProducts());
         mockOrder.setRestaurant(getRestaurant());
-        mockOrder.setTotal(30.00F);
+        mockOrder.setTotal(allSubtotal(mockOrder));
 
         return mockOrder;
     }
@@ -81,7 +83,27 @@ public class CheckoutActivity extends AppCompatActivity implements View.OnClickL
         products.add(new Product("Mc Menu", "good burger", "https://static.seekingalpha.com/uploads/2018/7/24/saupload_3000px-McDonald_27s_SVG_logo.svg.png", 5F));
         products.add(new Product("Mc Menu", "good burger", "https://static.seekingalpha.com/uploads/2018/7/24/saupload_3000px-McDonald_27s_SVG_logo.svg.png", 5F));
 
+        setInstantQuantity(products);
+
         return products;
+    }
+
+    //TODO hardcoded
+    private void setInstantQuantity(ArrayList<Product> products){
+        for(Product p : products){
+            p.setQuantity(2);
+        }
+    }
+
+    //TODO hardcoded
+    private float allSubtotal(Order order){
+        float subtotal = 0F;
+
+        for(Product p : order.getProducts()){
+            subtotal += p.getSubtotal();
+        }
+
+        return subtotal;
     }
 
     @Override

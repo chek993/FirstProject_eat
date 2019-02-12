@@ -32,6 +32,17 @@ public class RestaurantAdapter extends RecyclerView.Adapter {
         this.context = context;
     }
 
+    public RestaurantAdapter(Context context){
+        inflater = LayoutInflater.from(context);
+        this.data = new ArrayList<>();
+        this.context = context;
+    }
+
+    public void setData(ArrayList<Restaurant> data){
+        this.data = data;
+        notifyDataSetChanged();
+    }
+
     public boolean isGridMode() {
         return isGridMode;
     }

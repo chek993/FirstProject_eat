@@ -7,13 +7,23 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.firstproject_eat.R;
 import com.example.firstproject_eat.datamodels.Restaurant;
 import com.example.firstproject_eat.ui.adapters.RestaurantAdapter;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 
@@ -22,12 +32,14 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView restaurantRV;
     RecyclerView.LayoutManager layoutManager;
     RestaurantAdapter adapter;
-    ArrayList<Restaurant> restaurants;
+    ArrayList<Restaurant> restaurants = new ArrayList<>();
 
     SharedPreferences sharedPreferences;
 
     private static final String SharedPrefs = "com.example.firstproject_eat.general_pref";
     private static final String VIEW_MODE = "VIEW_MODE";
+
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,14 +49,53 @@ public class MainActivity extends AppCompatActivity {
         restaurantRV = findViewById(R.id.places_rv);
 
         layoutManager = getLayoutManager(getSavedLayoutManager());
-        adapter = new RestaurantAdapter(this, getData());
+        adapter = new RestaurantAdapter(this/*, getData()*/);
 
         adapter.setGridMode(getSavedLayoutManager());
 
         restaurantRV.setLayoutManager(layoutManager);
         restaurantRV.setAdapter(adapter);
+
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url ="http://5ba19290ee710f0014dd764c.mockapi.io/api/v1/restaurant";
+
+        // Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.GET, // HTTP request method
+                url,    // Server link
+                new Response.Listener<String>() {   // Listener for successful request
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d(TAG, response);
+                        //Start parsing
+                        try {
+                            JSONArray restaurantJsonArray = new JSONArray(response);
+                            for(int i = 0; i < restaurantJsonArray.length(); i++){
+                                Restaurant restaurant = new Restaurant(restaurantJsonArray.getJSONObject(i));
+                                restaurants.add(restaurant);
+                            }
+                            adapter.setData(restaurants);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {  // Listener for error request
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e(TAG, error.getMessage()); // + " " + error.networkResponse.statusCode);
+                    }
+                }
+        );
+
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest);
+
     }
 
+    //TODO hardcoded
     private ArrayList<Restaurant> getData(){
         restaurants = new ArrayList<>();
         restaurants.add(new Restaurant("McDonald's", "Via Tiburtina, 515, 00159 Roma RM", 8.50F, "https://static.seekingalpha.com/uploads/2018/7/24/saupload_3000px-McDonald_27s_SVG_logo.svg.png"));

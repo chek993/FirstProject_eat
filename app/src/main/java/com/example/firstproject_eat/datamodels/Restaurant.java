@@ -1,5 +1,8 @@
 package com.example.firstproject_eat.datamodels;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 public class Restaurant {
@@ -16,6 +19,14 @@ public class Restaurant {
         this.image = image;
 
         products = new ArrayList<>();
+    }
+
+    public Restaurant(JSONObject jsonRestaurant) throws JSONException {
+        name = jsonRestaurant.getString("name");
+        address = jsonRestaurant.getString("address");
+        minOrder = Float.valueOf(jsonRestaurant.getString("min_order"));
+        image = jsonRestaurant.getString("image_url");
+
     }
 
     public String getName() {
