@@ -15,4 +15,9 @@
     <string name="price_tv">Price</string>
     <string name="order_summary">Order summary</string>
     <string name="pay">PAY</string>
+    <string name="alert_negative">Can\'t remove this product. Total should be less than min order</string>
+    <string name="ok">OK</string>
+    <string name="alert">Are you sure you want to remove the product?</string>
+    <string name="alert_yes">YES</string>
+    <string name="alert_no">NO</string>
 </resources>

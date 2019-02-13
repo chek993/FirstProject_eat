@@ -17,7 +17,7 @@ import com.example.firstproject_eat.ui.adapters.OrderProductsAdapter;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class CheckoutActivity extends AppCompatActivity implements View.OnClickListener {
+public class CheckoutActivity extends AppCompatActivity implements View.OnClickListener, OrderProductsAdapter.OnRemovedListener {
 
     private TextView restaurantNameTv, restaurantAddressTv, totalTv, minOrderTv;
     private RecyclerView productRv;
@@ -47,6 +47,7 @@ public class CheckoutActivity extends AppCompatActivity implements View.OnClickL
         productRv.setLayoutManager(layoutManager);
 
         adapter = new OrderProductsAdapter(this, order.getProducts());
+        adapter.setOnRemovedListener(this);
         productRv.setAdapter(adapter);
     }
 
@@ -109,5 +110,19 @@ public class CheckoutActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
         //TODO manage click
+    }
+
+    @Override
+    public void onRemoved(Product product) {
+            order.setTotal(order.getTotal() - product.getSubtotal());
+            totalTv.setText(String.format(Locale.getDefault(), "%.2f", order.getTotal()));
+    }
+
+    @Override
+    public boolean onCheckedRemove(Product product) {
+        if(order.getTotal() - product.getSubtotal() >= order.getRestaurant().getMinOrder()) {
+            return true;
+        }
+        return false;
     }
 }

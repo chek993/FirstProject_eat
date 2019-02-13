@@ -1,6 +1,8 @@
 package com.example.firstproject_eat.ui.adapters;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -27,7 +29,20 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
         inflater = LayoutInflater.from(context);
     }
 
+    public interface OnRemovedListener{
+        void onRemoved(Product product);
+        boolean onCheckedRemove(Product product);
+    }
 
+    private OnRemovedListener onRemovedListener;
+
+    public OnRemovedListener getOnRemovedListener() {
+        return onRemovedListener;
+    }
+
+    public void setOnRemovedListener(OnRemovedListener onRemovedListener) {
+        this.onRemovedListener = onRemovedListener;
+    }
 
     @NonNull
     @Override
@@ -70,8 +85,36 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
         @Override
         public void onClick(View v) {
             //TODO alertDialog
-            dataSet.remove(getAdapterPosition());
-            notifyItemRemoved(getAdapterPosition());
+            if(onRemovedListener.onCheckedRemove(dataSet.get(getAdapterPosition()))) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(context);
+                alert.setMessage(context.getResources().getString(R.string.alert));
+                alert.setPositiveButton(context.getResources().getString(R.string.alert_yes), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        onRemovedListener.onRemoved(dataSet.get(getAdapterPosition()));
+                        dataSet.remove(getAdapterPosition());
+                        notifyItemRemoved(getAdapterPosition());
+                    }
+                });
+
+                alert.setNegativeButton(context.getResources().getString(R.string.alert_no), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        return;
+                    }
+                });
+                alert.create().show();
+            }else{
+                AlertDialog.Builder alert = new AlertDialog.Builder(context);
+                alert.setMessage(context.getResources().getString(R.string.alert_negative));
+                alert.setNeutralButton(context.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        return;
+                    }
+                });
+                alert.create().show();
+            }
         }
     }
 }
