@@ -26,6 +26,8 @@ public class RestaurantAdapter extends RecyclerView.Adapter {
     private Context context;
     private boolean isGridMode;
 
+    public final static String ID_EXTRA_KEY = "id";
+
     public RestaurantAdapter(Context context, ArrayList<Restaurant> data){
         inflater = LayoutInflater.from(context);
         this.data = data;
@@ -87,7 +89,6 @@ public class RestaurantAdapter extends RecyclerView.Adapter {
 
         public ImageView restaurantImage;
         public TextView restaurantName, restaurantAddress, restaurantMinOrder;
-        //public Button menuBtn;
         public CardView restaurantCv;
 
         public RestaurantViewHolder(@NonNull View itemView) {
@@ -97,18 +98,17 @@ public class RestaurantAdapter extends RecyclerView.Adapter {
             restaurantName = itemView.findViewById(R.id.name_tv);
             restaurantAddress = itemView.findViewById(R.id.address_tv);
             restaurantMinOrder = itemView.findViewById(R.id.min_order_value_tv);
-            //menuBtn = itemView.findViewById(R.id.menu_btn);
             restaurantCv = itemView.findViewById(R.id.restaurant_card_view);
 
-            //menuBtn.setOnClickListener(this);
             restaurantCv.setOnClickListener(this);
-
         }
 
         @Override
         public void onClick(View v) {
             if(v.getId() == R.id.restaurant_card_view){
-                context.startActivity(new Intent(context, ShopActivity.class));
+                Intent intent = new Intent(context, ShopActivity.class);
+                intent.putExtra(ID_EXTRA_KEY, data.get(getAdapterPosition()).getId());
+                context.startActivity(intent);
 
                 //TODO intent;
             }

@@ -1,6 +1,7 @@
 package com.example.firstproject_eat.ui.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.firstproject_eat.R;
 import com.example.firstproject_eat.Utilities;
@@ -17,6 +19,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     EditText emailEt, passwordEt;
     Button loginBtn, registerBtn;
+    TextView credits;
     boolean isEmailValid;
 
     public static final String EMAIL_KEY = "email_login";
@@ -31,9 +34,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         passwordEt = findViewById(R.id.password_et);
         loginBtn = findViewById(R.id.login_btn);
         registerBtn = findViewById(R.id.register_btn);
+        credits = findViewById(R.id.credits_tv);
 
         loginBtn.setOnClickListener(this);
         registerBtn.setOnClickListener(this);
+        credits.setOnClickListener(this);
 
         emailEt.addTextChangedListener(new TextWatcher() {
             @Override
@@ -65,6 +70,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }else if(v.getId() == R.id.register_btn){
             Intent register = new Intent(this, RegisterActivity.class);
             startActivity(register);
+        }else if(v.getId() == R.id.credits_tv){
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(this.getResources().getString(R.string.github_link))));
         }
     }
 

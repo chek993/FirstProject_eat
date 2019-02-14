@@ -1,18 +1,26 @@
 package com.example.firstproject_eat.datamodels;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Product {
 
     private String name, description, image;
     private float price;
     private int quantity = 0;
 
-    //IMMAGINE
-
     public Product(String name, String description, String image, float price){
         this.name = name;
         this.description = description;
         this.image = image;
         this.price = price;
+    }
+
+    public Product(JSONObject jsonProduct) throws JSONException {
+        name = jsonProduct.getString("name");
+        description = jsonProduct.getString("ingredients");
+        image = jsonProduct.getString("image_url");
+        price = Float.valueOf(jsonProduct.getString("price"));
     }
 
     public String getName() {
@@ -22,6 +30,7 @@ public class Product {
     public void setName(String name) {
         this.name = name;
     }
+
     public String getDescription() {
         return description;
     }

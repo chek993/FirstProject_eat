@@ -23,9 +23,23 @@ public class ProductAdapter extends RecyclerView.Adapter {
     private ArrayList<Product> products;
     private Context context;
 
+    public ArrayList<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(ArrayList<Product> products) {
+        this.products = products;
+        notifyDataSetChanged();
+    }
     public ProductAdapter(Context context, ArrayList<Product> products){
         inflater = LayoutInflater.from(context);
         this.products = products;
+        this.context = context;
+    }
+
+    public ProductAdapter(Context context){
+        inflater = LayoutInflater.from(context);
+        products = new ArrayList<>();
         this.context = context;
     }
 

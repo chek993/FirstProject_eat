@@ -20,4 +20,6 @@
     <string name="alert">Are you sure you want to remove the product?</string>
     <string name="alert_yes">YES</string>
     <string name="alert_no">NO</string>
+    <string name="credits">Developed by <u>@Chek993</u></string>
+    <string name="github_link">https://github.com/chek993</string>
 </resources>

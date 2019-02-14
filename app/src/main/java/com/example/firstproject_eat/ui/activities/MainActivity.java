@@ -11,6 +11,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -20,6 +23,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.firstproject_eat.R;
 import com.example.firstproject_eat.datamodels.Restaurant;
+import com.example.firstproject_eat.services.RestController;
 import com.example.firstproject_eat.ui.adapters.RestaurantAdapter;
 
 import org.json.JSONArray;
@@ -27,12 +31,15 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Response.Listener<String>, Response.ErrorListener{
 
     RecyclerView restaurantRV;
     RecyclerView.LayoutManager layoutManager;
     RestaurantAdapter adapter;
     ArrayList<Restaurant> restaurants = new ArrayList<>();
+    ProgressBar loadingProgressBar;
+
+    private RestController restController;
 
     SharedPreferences sharedPreferences;
 
@@ -47,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         restaurantRV = findViewById(R.id.places_rv);
+        loadingProgressBar = findViewById(R.id.progressBar_loading);
 
         layoutManager = getLayoutManager(getSavedLayoutManager());
         adapter = new RestaurantAdapter(this/*, getData()*/);
@@ -56,9 +64,12 @@ public class MainActivity extends AppCompatActivity {
         restaurantRV.setLayoutManager(layoutManager);
         restaurantRV.setAdapter(adapter);
 
-        // Instantiate the RequestQueue.
+        restController = new RestController(this);
+        restController.getRequest(Restaurant.ENDPOINT, this, this);
+
+        /* Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="http://5ba19290ee710f0014dd764c.mockapi.io/api/v1/restaurant";
+        String url ="https://4a517745.ngrok.io/api/v1/restaurant";
 
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(
@@ -78,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
                             adapter.setData(restaurants);
 
                         } catch (JSONException e) {
-                            e.printStackTrace();
+                            Log.e(TAG, e.getMessage());
                         }
                     }
                 },
@@ -92,10 +103,11 @@ public class MainActivity extends AppCompatActivity {
 
         // Add the request to the RequestQueue.
         queue.add(stringRequest);
+        */
 
     }
 
-    //TODO hardcoded
+    /*TODO hardcoded
     private ArrayList<Restaurant> getData(){
         restaurants = new ArrayList<>();
         restaurants.add(new Restaurant("McDonald's", "Via Tiburtina, 515, 00159 Roma RM", 8.50F, "https://static.seekingalpha.com/uploads/2018/7/24/saupload_3000px-McDonald_27s_SVG_logo.svg.png"));
@@ -104,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
 
         return restaurants;
 
-    }
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -161,5 +173,25 @@ public class MainActivity extends AppCompatActivity {
     private boolean getSavedLayoutManager(){
         sharedPreferences = getSharedPreferences(SharedPrefs, MODE_PRIVATE);
         return sharedPreferences.getBoolean(VIEW_MODE, false);
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError error) {
+        Log.e(TAG, error.getMessage());
+        Toast.makeText(this, error.getMessage(), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onResponse(String response) {
+        try {
+            JSONArray jsonArray = new JSONArray(response);
+            for(int i = 0; i < jsonArray.length(); i++){
+                restaurants.add(new Restaurant(jsonArray.getJSONObject(i)));
+            }
+            adapter.setData(restaurants);
+            loadingProgressBar.setVisibility(View.GONE);
+        } catch (JSONException e) {
+            Log.e(TAG, e.getMessage());
+        }
     }
 }
