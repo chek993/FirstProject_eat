@@ -178,6 +178,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
     @Override
     public void onErrorResponse(VolleyError error) {
         Log.e(TAG, error.getMessage());
+        loadingProgressBar.setVisibility(View.GONE);
         Toast.makeText(this, error.getMessage(), Toast.LENGTH_LONG).show();
     }
 

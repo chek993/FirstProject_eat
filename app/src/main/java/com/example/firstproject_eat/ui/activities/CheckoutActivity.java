@@ -71,18 +71,18 @@ public class CheckoutActivity extends AppCompatActivity implements View.OnClickL
 
     //TODO hardcoded
     private Restaurant getRestaurant(){
-        return new Restaurant("McDonald's", "address", 14.50f, "https://static.seekingalpha.com/uploads/2018/7/24/saupload_3000px-McDonald_27s_SVG_logo.svg.png");
+        return new Restaurant("McDonald's", "address", 14.50f, "https://static.seekingalpha.com/uploads/2018/7/24/saupload_3000px-McDonald_27s_SVG_logo.svg.png", "56895");
     }
 
     //TODO hardcoded
     private ArrayList<Product> getProducts(){
         ArrayList<Product> products = new ArrayList<>();
 
-        products.add(new Product("Mc Menu", "good burger", "https://static.seekingalpha.com/uploads/2018/7/24/saupload_3000px-McDonald_27s_SVG_logo.svg.png", 5F));
-        products.add(new Product("Mc Menu", "good burger", "https://static.seekingalpha.com/uploads/2018/7/24/saupload_3000px-McDonald_27s_SVG_logo.svg.png", 5F));
-        products.add(new Product("Mc Menu", "good burger", "https://static.seekingalpha.com/uploads/2018/7/24/saupload_3000px-McDonald_27s_SVG_logo.svg.png", 5F));
-        products.add(new Product("Mc Menu", "good burger", "https://static.seekingalpha.com/uploads/2018/7/24/saupload_3000px-McDonald_27s_SVG_logo.svg.png", 5F));
-        products.add(new Product("Mc Menu", "good burger", "https://static.seekingalpha.com/uploads/2018/7/24/saupload_3000px-McDonald_27s_SVG_logo.svg.png", 5F));
+        products.add(new Product("Mc Menu", "good burger", "https://static.seekingalpha.com/uploads/2018/7/24/saupload_3000px-McDonald_27s_SVG_logo.svg.png","56895",5F));
+        products.add(new Product("Mc Menu", "good burger", "https://static.seekingalpha.com/uploads/2018/7/24/saupload_3000px-McDonald_27s_SVG_logo.svg.png","56895",5F));
+        products.add(new Product("Mc Menu", "good burger", "https://static.seekingalpha.com/uploads/2018/7/24/saupload_3000px-McDonald_27s_SVG_logo.svg.png","56895" ,5F));
+        products.add(new Product("Mc Menu", "good burger", "https://static.seekingalpha.com/uploads/2018/7/24/saupload_3000px-McDonald_27s_SVG_logo.svg.png","56895" ,5F));
+        products.add(new Product("Mc Menu", "good burger", "https://static.seekingalpha.com/uploads/2018/7/24/saupload_3000px-McDonald_27s_SVG_logo.svg.png","56895" ,5F));
 
         setInstantQuantity(products);
 

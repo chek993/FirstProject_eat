@@ -23,14 +23,8 @@ public class ProductAdapter extends RecyclerView.Adapter {
     private ArrayList<Product> products;
     private Context context;
 
-    public ArrayList<Product> getProducts() {
-        return products;
-    }
+    private OnQuantityChangedListener onQuantityChangedListener;
 
-    public void setProducts(ArrayList<Product> products) {
-        this.products = products;
-        notifyDataSetChanged();
-    }
     public ProductAdapter(Context context, ArrayList<Product> products){
         inflater = LayoutInflater.from(context);
         this.products = products;
@@ -43,11 +37,18 @@ public class ProductAdapter extends RecyclerView.Adapter {
         this.context = context;
     }
 
+    public ArrayList<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(ArrayList<Product> products) {
+        this.products = products;
+        notifyDataSetChanged();
+    }
+
     public interface OnQuantityChangedListener{
         void onChange(float price);
     }
-
-    private OnQuantityChangedListener onQuantityChangedListener;
 
     public OnQuantityChangedListener getOnQuantityChangedListener() {
         return onQuantityChangedListener;

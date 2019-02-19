@@ -15,11 +15,12 @@ public class Restaurant {
 
     public static final String ENDPOINT = "restaurants/";
 
-    public Restaurant(String name, String address, float minOrder, String image){
+    public Restaurant(String name, String address, float minOrder, String image, String id){
         this.name = name;
         this.address = address;
         this.minOrder = minOrder;
         this.image = image;
+        this.id = id;
     }
 
     public Restaurant(JSONObject jsonRestaurant) throws JSONException {

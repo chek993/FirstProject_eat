@@ -6,6 +6,7 @@ import android.util.Patterns;
 public class Utilities {
 
     private final static int LEN_PASSWORD = 6;
+    private static final int USERNNAME_LENGTH = 4;
 
     public static boolean isValidEmail(String email) {
         if (TextUtils.isEmpty(email)) {
@@ -33,6 +34,14 @@ public class Utilities {
             return false;
         } else {
             return Patterns.PHONE.matcher(email).matches();
+        }
+    }
+
+    public static boolean isValidUsername(String username) {
+        if (TextUtils.isEmpty(username)) {
+            return false;
+        } else {
+            return username.length() > USERNNAME_LENGTH;
         }
     }
 }

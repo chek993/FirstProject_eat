@@ -15,6 +15,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="100dp"
+            android:hint="@string/username_hint"
+            android:id="@+id/insert_username_et"
+            android:inputType="textEmailAddress"
+            android:drawableRight="@drawable/ic_person"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:hint="@string/email_hint"
             android:id="@+id/insert_email_et"
             android:inputType="textEmailAddress"

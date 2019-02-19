@@ -8,14 +8,16 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import java.util.Map;
+
 public class RestController {
 
-    /*private final static String BASE_URL = "http://138.68.86.70/";
-    private final static String VERSION = "";*/
+    private final static String BASE_URL = "http://138.68.86.70/";
+    private final static String VERSION = "";
 
-    //TODO Ferrigno's API
+    /*//TODO Ferrigno's API
     private final static String BASE_URL = "http://5c659d3419df280014b6272a.mockapi.io/api/";
-    private final static String VERSION = "v1/";
+    private final static String VERSION = "v1/";*/
 
     private RequestQueue queue;
 
@@ -30,6 +32,19 @@ public class RestController {
                 error
                 );
         queue.add(stringRequest);
+    }
+
+    public void postRequest(String endpoint, final Map<String, String> params, Response.Listener<String> success, Response.ErrorListener error){
+
+        String url = BASE_URL.concat(VERSION).concat(endpoint);
+
+        StringRequest request = new StringRequest(Request.Method.POST, url, success,error) {
+            @Override
+            protected Map<String,String> getParams(){
+                return params;
+            }
+        };
+        queue.add(request);
     }
 }
 

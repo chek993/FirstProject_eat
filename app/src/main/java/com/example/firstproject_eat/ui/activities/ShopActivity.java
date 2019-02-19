@@ -1,11 +1,16 @@
 package com.example.firstproject_eat.ui.activities;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -42,6 +47,8 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
     private LinearLayoutManager layoutManager;
     private ProductAdapter adapter;
 
+    private Menu menu;
+
     private Restaurant restaurant;
 
     private String idRestaurant;
@@ -49,7 +56,9 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
 
     private float total = 0;
 
+    public static final String RESTAURANT_ID_KEY = "RESTAURANT_ID_KEY";
     private static final String TAG = ShopActivity.class.getSimpleName();
+    private static final int LOGIN_REQUEST_CODE = 2001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +78,7 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
         productsRv = findViewById(R.id.product_rv);
         checkoutBtn = findViewById(R.id.checkout_btn);
 
-        idRestaurant = getIntent().getStringExtra(RestaurantAdapter.ID_EXTRA_KEY);
+        idRestaurant = getIntent().getStringExtra(ShopActivity.RESTAURANT_ID_KEY);
 
         restController = new RestController(this);
         restController.getRequest(Restaurant.ENDPOINT.concat(idRestaurant), this, this);
@@ -85,6 +94,27 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
         checkoutBtn.setOnClickListener(this);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        this.menu = menu;
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_shop, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.login_menu){
+            Intent intent = new Intent(this,LoginActivity.class);
+            startActivityForResult(intent,LOGIN_REQUEST_CODE);
+        }else if(item.getItemId() == R.id.checkout_menu){
+            startActivity(new Intent(this, CheckoutActivity.class));
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private void binData(){
         restaurantNameTv.setText(restaurant.getName());
         restaurantAddressTv.setText(restaurant.getAddress());
@@ -95,6 +125,7 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
         Glide.with(this).load(restaurant.getImage()).into(restaurantIv);
 
         progressBar.setMax((int)(restaurant.getMinOrder() * 100));
+        adapter.setProducts(restaurant.getProducts());
     }
 
     @Override
@@ -133,6 +164,27 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        Log.d(TAG,"requestCode " + requestCode);
+        Log.d(TAG,"resultCode " + resultCode);
+
+        if(requestCode == LOGIN_REQUEST_CODE && resultCode == Activity.RESULT_OK){
+            // TODO login is successful manage result
+
+            Log.d(TAG, data.getStringExtra("response"));
+
+            menu.findItem(R.id.login_menu).setTitle(R.string.profile)
+                    .setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem menuItem) {
+                            startActivity(new Intent(ShopActivity.this,ProfileActivity.class));
+                            return true;
+                        }
+                    });
+        }
+    }
+
+    @Override
     public void onChange(float price) {
         updateTotal(price);
         updateProgress((int)(total * 100));
@@ -142,6 +194,7 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onErrorResponse(VolleyError error) {
         Log.e(TAG, error.getMessage());
+        loadingProgressBar.setVisibility(View.GONE);
         Toast.makeText(this, error.getMessage(), Toast.LENGTH_LONG).show();
     }
 
@@ -150,7 +203,6 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
         try {
             JSONObject jsonObject = new JSONObject(response);
             restaurant = new Restaurant(jsonObject);
-            adapter.setProducts(restaurant.getProducts());
             binData();
             loadingProgressBar.setVisibility(View.GONE);
         } catch (JSONException e) {

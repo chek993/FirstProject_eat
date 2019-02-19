@@ -3,6 +3,7 @@
     <string name="email_hint">insert email</string>
     <string name="password_hint">insert password</string>
     <string name="login">LOGIN</string>
+    <string name="login_lowercase">Login</string>
     <string name="register">REGISTER</string>
     <string name="telephone_number_hint">insert telephone number</string>
     <string name="checkout">Checkout</string>
@@ -22,4 +23,6 @@
     <string name="alert_no">NO</string>
     <string name="credits">Developed by <u>@Chek993</u></string>
     <string name="github_link">https://github.com/chek993</string>
+    <string name="username_hint">insert username</string>
+    <string name="profile">Profile</string>
 </resources>

@@ -5,14 +5,15 @@ import org.json.JSONObject;
 
 public class Product {
 
-    private String name, description, image;
+    private String name, description, image, id;
     private float price;
     private int quantity = 0;
 
-    public Product(String name, String description, String image, float price){
+    public Product(String name, String description, String image, String id, float price){
         this.name = name;
         this.description = description;
         this.image = image;
+        this.id = id;
         this.price = price;
     }
 
@@ -20,6 +21,7 @@ public class Product {
         name = jsonProduct.getString("name");
         description = jsonProduct.getString("ingredients");
         image = jsonProduct.getString("image_url");
+        id = jsonProduct.getString("id");
         price = Float.valueOf(jsonProduct.getString("price"));
     }
 
